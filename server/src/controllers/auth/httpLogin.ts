@@ -3,10 +3,12 @@ import login from "../../models/auth/login";
 import { credentialsError, regexPassword, serverIssue } from "../../utils/data";
 
 async function httpLogin(req: Request, res: Response) {
+  console.log("hello", req.body);
   const { username, password } = req.body;
   if (!password || !regexPassword.test(password)) {
     return res.status(401).json({ message: credentialsError });
   }
+
   try {
     const user = await login(username, password);
     if (user) {
