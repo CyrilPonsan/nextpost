@@ -1,19 +1,23 @@
-import { Response, NextFunction } from "express";
+import { Response, NextFunction, Request } from "express";
+import jwt from "jsonwebtoken";
 
 import CustomRequest from "../utils/interfaces/express/custom-request";
-import { serverIssue } from "../utils/data";
+import { noAccess } from "../utils/data";
 
 function checkToken(req: CustomRequest, res: Response, next: NextFunction) {
-  try {
-    console.log("session:", req.session);
-    if (req.session.userId !== null) {
+  const authCookie = req.cookies;
+  console.log("cookie", authCookie);
+
+  jwt.verify(authCookie, process.env.SESSION_SECRET!, (err: any, data: any) => {
+    if (err) {
+      return res.status(403).json({ message: noAccess });
+    } else if (data && data.role === "expediteur") {
+      // req.auth = { userId: data.userId, userRole: data.userRole };
       next();
     } else {
-      return res.status(403).json({ error: "Get off my lawn!" });
+      return res.status(403).json({ message: "Get off my lawan !" });
     }
-  } catch (err) {
-    res.status(500).json({ message: serverIssue + err });
-  }
+  });
 }
 
 export default checkToken;

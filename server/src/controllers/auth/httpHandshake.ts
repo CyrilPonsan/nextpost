@@ -1,20 +1,19 @@
-import { Request, Response } from "express";
-import { Expediteur } from "../../db/models/expediteur";
+import { Response } from "express";
+
+import CustomRequest from "../../utils/interfaces/express/custom-request";
+import getUserById from "../../models/user/getUserById";
 import { noAccess, serverIssue } from "../../utils/data";
 
-async function httpHandshake(req: Request, res: Response) {
-  if (req.session.userId !== null) {
+async function httpHandshake(req: CustomRequest, res: Response) {
+  if (req.auth && req.auth.userId !== null) {
     try {
-      const user = await Expediteur.findOne({
-        where: { email: req.session.email },
-      });
-      if (user) {
+      const user = await getUserById(req.auth.userId);
+
+      if (user && user.role[0] === "expediteur") {
         return res.status(200).json({
-          email: user.email,
           id: user.id,
-          nom: user.nom,
-          prenom: user.prenom,
-          roles: user.roles,
+          email: user.email,
+          role: user.role,
         });
       }
       return res.status(403).json({ message: noAccess });

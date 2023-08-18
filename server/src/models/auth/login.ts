@@ -19,7 +19,7 @@ async function login(email: string, password: string) {
         id: user.id,
         nom: user.nom,
         prenom: user.prenom,
-        roles: user.roles,
+        role: user.roles[0],
       };
     }
   }

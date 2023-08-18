@@ -1,10 +1,12 @@
-import { Request, Response } from "express";
+import { Response } from "express";
+
 import getAllCourriers from "../../models/courrier/gatAllCourriers";
+import CustomRequest from "../../utils/interfaces/express/custom-request";
 
-async function httpGetCourriers(req: Request, res: Response) {
-  console.log(req.session);
+async function httpGetCourriers(req: CustomRequest, res: Response) {
+  let id: any = req.auth!.userId;
+  console.log({ id });
 
-  let id: any = req.session.userId;
   if (id) {
     id = parseInt(id);
     console.log("id", id);
