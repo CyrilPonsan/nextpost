@@ -9,14 +9,15 @@ async function httpLogin(req: Request, res: Response) {
   if (!password || !regexPassword.test(password)) {
     return res.status(401).json({ message: credentialsError });
   }
+  console.log({ username, password });
 
   try {
-    let user: any = await login(username, password);
+    const user: any = await login(username, password);
+    console.log("user", user);
+
     if (user) {
       const accessToken = setToken(user.id, user.role);
       const refreshToken = setToken(user.id, user.role);
-
-      user = { ...user, accessToken, refreshToken };
 
       return res
         .cookie("accessToken", accessToken, {
