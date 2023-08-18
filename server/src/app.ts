@@ -16,6 +16,7 @@ app
     cors({
       origin: ["http://localhost:3000"],
       credentials: true,
+      exposedHeaders: ["set-cookie"],
     })
   )
   .use(cookieParser())
@@ -24,6 +25,11 @@ app
   .use(express.static(path.join(__dirname, "..", "public")));
 
 app.use("/v1", api);
+app.get("/test", (req, res) => {
+  const authCookie = req.cookies.accessToken;
+  console.log("authCookie:", authCookie);
+  res.send("Check console for cookie value");
+});
 
 /* app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));

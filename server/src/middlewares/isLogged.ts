@@ -1,21 +1,30 @@
-import { Response, NextFunction, Request } from "express";
+import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 import CustomRequest from "../utils/interfaces/express/custom-request";
 import { noAccess } from "../utils/data";
 
 function checkToken(req: CustomRequest, res: Response, next: NextFunction) {
-  const authCookie = req.cookies["__session"];
-  console.log("cookie", authCookie);
+  // on récupère le cookie contenant le jeton d'accès
+  const authCookie = req.cookies.accessToken;
 
+  // en l'absence du dit jeton on renvoie une erreur 403
+  if (!authCookie) {
+    return res.status(403).json({ message: noAccess });
+  }
+
+  // on vérifie que le jeton n'a pas expiré et s'il est bien valide on en extrait les données qu'il contient
   jwt.verify(authCookie, process.env.SESSION_SECRET!, (err: any, data: any) => {
+    // s'il n'est pas valide on retourne une erreur 403
     if (err) {
       return res.status(403).json({ message: noAccess });
-    } else if (data && data.role === "expediteur") {
+    } else if (data && data.userRole === "expediteur") {
+      // extraction des données utiles pour assurer la bonne continuité de la requête
       req.auth = { userId: data.userId, userRole: data.userRole };
       next();
     } else {
-      return res.status(403).json({ message: "Get off my lawan !" });
+      // si l'utilisateur n'a pas le rôle requis sur cette partie de l'api il reçoit une erreur 403
+      return res.status(403).json({ message: "Access denied" });
     }
   });
 }

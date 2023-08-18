@@ -1,19 +1,29 @@
 import { Request, Response } from "express";
 
-import { credentialsError, regexPassword, serverIssue } from "../../utils/data";
+import {
+  badQuery,
+  credentialsError,
+  regexPassword,
+  serverIssue,
+} from "../../utils/data";
 import { setToken } from "../../utils/auth.services/setToken";
 import login from "../../models/auth/login";
+import { validationResult } from "express-validator";
 
 async function httpLogin(req: Request, res: Response) {
+  const result = validationResult(req);
+
+  if (!result.isEmpty()) {
+    return res.status(400).json({ message: badQuery });
+  }
+
   const { username, password } = req.body;
   if (!password || !regexPassword.test(password)) {
     return res.status(401).json({ message: credentialsError });
   }
-  console.log({ username, password });
 
   try {
     const user: any = await login(username, password);
-    console.log("user", user);
 
     if (user) {
       const accessToken = setToken(user.id, user.role);
@@ -21,7 +31,7 @@ async function httpLogin(req: Request, res: Response) {
 
       return res
         .cookie("accessToken", accessToken, {
-          maxAge: 60 * 60,
+          maxAge: 20 * 60 * 1000,
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
         })
