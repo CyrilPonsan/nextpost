@@ -1,4 +1,5 @@
 import sequelize from "sequelize";
+
 import { Courrier } from "../../db/models/courrier";
 import { Statut } from "../../db/models/statut";
 import { StatutCourrier } from "../../db/models/statutCourrier";
@@ -13,8 +14,6 @@ async function getAllCourriers(
   direction: string
 ) {
   const condition = type === "true" ? "< 5" : "> 4";
-
-  console.log("welcome");
 
   const statuts = await Statut.findAll();
 
@@ -51,8 +50,6 @@ async function getAllCourriers(
     return { ...courrier.dataValues, etat: item!.dataValues.etat };
   });
 
-  console.log(response);
-
   const result = Array<any>();
 
   const offset = getOffset(page, limit);
@@ -61,7 +58,7 @@ async function getAllCourriers(
     result.push(courriers[i]);
   }
 
-  return result;
+  return { courriers: result, totalPages: courriers.length };
 }
 
 export default getAllCourriers;

@@ -9,7 +9,7 @@ courrierRouter.get(
   "/",
   isLogged,
   query("page").isNumeric().notEmpty().escape(),
-  query("limi").isNumeric().notEmpty().escape(),
+  query("limit").isNumeric().notEmpty().escape(),
   query("type").isBoolean().notEmpty().escape(),
   query("field").isString().notEmpty().escape(),
   query("direction").isString().notEmpty().escape(),

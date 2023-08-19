@@ -24,8 +24,6 @@ async function httpGetCourriers(req: CustomRequest, res: Response) {
 
     const { page, limit, type, direction, field } = req.query;
 
-    console.log({ page, limit, type, direction, field });
-
     const result = await getAllCourriers(
       id,
       +page!,
@@ -34,7 +32,7 @@ async function httpGetCourriers(req: CustomRequest, res: Response) {
       field! as string,
       direction! as string
     );
-    if (result && result.length > 0) {
+    if (result && result.totalPages > 0) {
       return res.status(200).json(result);
     } else {
       return res.status(404).json({ message: "Aucun courrier trouvé" });
