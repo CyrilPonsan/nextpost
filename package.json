@@ -1,1 +1,17 @@
-{}
+{
+  "name": "step-post",
+  "version": "2.0.0",
+  "description": "application client pour Steo Post",
+  "main": "main.js",
+  "scripts": {
+    "install-server": "npm install --prefix server",
+    "install-client": "npm install --prefix client",
+    "install": "npm run install-server && npm run install-client",
+    "server": "npm run start --prefix api",
+    "client": "npm run dev --prefix front",
+    "watch": "npm run start:dev --prefix server & npm run dev --prefix client",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "studio@step.eco",
+  "license": "ISC"
+}
