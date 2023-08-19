@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import CustomRequest from "../utils/interfaces/express/custom-request";
 import { noAccess } from "../utils/data";
 
-function checkToken(req: CustomRequest, res: Response, next: NextFunction) {
+function isLogged(req: CustomRequest, res: Response, next: NextFunction) {
   // on récupère le cookie contenant le jeton d'accès
   const authCookie = req.cookies.accessToken;
 
@@ -29,4 +29,4 @@ function checkToken(req: CustomRequest, res: Response, next: NextFunction) {
   });
 }
 
-export default checkToken;
+export default isLogged;

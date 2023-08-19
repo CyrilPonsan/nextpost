@@ -1,16 +1,23 @@
 import type { AxiosResponse } from "axios";
 import axios from "axios";
 
-export async function getCourriers(cookie: string) {
+export async function getCourriers(
+  cookie: string,
+  page: string,
+  limit: string,
+  type: string,
+  field: string,
+  direction: string
+) {
   try {
-    console.log(cookie);
+    console.log("toto");
 
     const response: AxiosResponse = await axios.get(
-      "http://localhost:4000/v1/expediteur",
+      `http://localhost:4000/v1/courrier?page=${page}&limit=${limit}&type=${type}&field=${field}&direction=${direction}`,
       { headers: { Cookie: cookie || "" } }
     );
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error: any) {
+    throw new Error(error.response.data.message);
   }
 }

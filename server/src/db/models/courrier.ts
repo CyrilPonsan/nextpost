@@ -33,7 +33,7 @@ export class Courrier extends Model {
     type: DataType.STRING,
     allowNull: true,
   })
-  civilite!: string;
+  civilite?: string;
 
   @Column({
     type: DataType.STRING,
@@ -75,19 +75,19 @@ export class Courrier extends Model {
     type: DataType.STRING,
     allowNull: true,
   })
-  telephone!: string;
+  telephone?: string;
 
   @Column({
     type: DataType.BLOB("long"),
     allowNull: true,
   })
-  signature!: any;
+  signature?: any;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
   })
-  procuration!: string;
+  procuration?: string;
 
   @ForeignKey(() => Expediteur)
   @Column({

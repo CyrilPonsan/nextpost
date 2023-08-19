@@ -1,4 +1,4 @@
-import { type LinksFunction } from "@remix-run/node";
+import type { V2_MetaFunction, LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -14,6 +14,16 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
 
+export const meta: V2_MetaFunction = () => {
+  return [
+    { title: "Step Post" },
+    {
+      name: "description",
+      content: "Opérateur postal privé de proximité basé sur",
+    },
+  ];
+};
+
 export default function App() {
   return (
     <html lang="en" data-theme="stepPost">
@@ -23,7 +33,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="min-h-screen bg-neutral">
         <Outlet />
         <ScrollRestoration />
         <Scripts />

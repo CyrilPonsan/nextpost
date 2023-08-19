@@ -1,7 +1,8 @@
-import { type ActionArgs } from "@remix-run/node";
+import { redirect, type ActionArgs } from "@remix-run/node";
 
 import LoginForm from "~/components/LoginForm";
-import { login } from "~/utils/session.server";
+import { validateCredentials } from "~/helpers/validation/login";
+import { login } from "~/utils/auth.server";
 
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
@@ -9,18 +10,33 @@ export const action = async ({ request }: ActionArgs) => {
   const password = form.get("password");
 
   if (typeof password == "string" && typeof username === "string") {
-    console.log({ username, password });
+    try {
+      validateCredentials({ username, password });
+    } catch (error: any) {
+      return error;
+    }
 
-    return await login(username, password);
+    try {
+      return await login(username, password);
+    } catch (error: any) {
+      if (error.response.status === 401) {
+        return error.response.data.message;
+      } else {
+        return redirect("/login");
+      }
+    }
   }
 };
 
 const LoginPage = () => {
   return (
-    <main className="bg-gradient-to-b from-primary to-info min-h-screen flex justify-center items-center">
-      <section className="w-3/6 h-5/6 bg-pink-400 grid grid-cols-2 gap-32">
-        <LoginForm />
-        <div className="w-full h-full bg-[url('/images/login.jpg')] bg-cover bg-center bg-no-repeat rounded-xl shadow-xl"></div>
+    <main className="min-h-screen flex justify-center items-center">
+      <section className="w-5/6 md:w-3/6 lg:w-2/6 xl:w-4/6 2xl:w-3/6 grid grid-cols-1 xl:grid-cols-2 gap-8 xl:gap-32">
+        <div className="h-fit flex flex-col gap-y-4">
+          <div className="text-3xl font-extrabold text-primary">Connexion</div>
+          <LoginForm />
+        </div>
+        <div className="w-full lg:h-[30rem] bg-[url('/images/step-post.jpg')] bg-cover bg-center bg-no-repeat rounded-xl shadow-xl"></div>
       </section>
     </main>
   );

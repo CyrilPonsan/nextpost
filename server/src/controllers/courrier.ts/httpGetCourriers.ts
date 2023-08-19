@@ -1,18 +1,46 @@
 import { Response } from "express";
 
-import getAllCourriers from "../../models/courrier/gatAllCourriers";
+import getAllCourriers from "../../models/courrier/getAllCourriers";
 import CustomRequest from "../../utils/interfaces/express/custom-request";
+import { badQuery, noAccess, serverIssue } from "../../utils/data";
+import { validationResult } from "express-validator";
 
 async function httpGetCourriers(req: CustomRequest, res: Response) {
-  let id: any = req.auth!.userId;
-  console.log({ id });
+  const result = validationResult(req);
 
-  if (id) {
-    id = parseInt(id);
-    console.log("id", id);
+  if (!result.isEmpty()) {
+    return res.status(400).json({ message: badQuery });
+  }
 
-    const result = await getAllCourriers(id);
-    return res.status(200).json(result);
+  try {
+    let id: any = req.auth!.userId;
+
+    if (id) {
+      id = parseInt(id);
+    } else {
+      return res.status(403).json({ message: noAccess });
+    }
+    console.log({ id });
+
+    const { page, limit, type, direction, field } = req.query;
+
+    console.log({ page, limit, type, direction, field });
+
+    const result = await getAllCourriers(
+      id,
+      +page!,
+      +limit!,
+      type! as string,
+      field! as string,
+      direction! as string
+    );
+    if (result && result.length > 0) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(404).json({ message: "Aucun courrier trouvé" });
+    }
+  } catch (error: any) {
+    return res.status(500).json({ message: serverIssue });
   }
 }
 

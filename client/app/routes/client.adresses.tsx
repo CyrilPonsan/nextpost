@@ -1,11 +1,11 @@
-import { redirect, type ActionArgs } from "@remix-run/node";
+import { type ActionArgs } from "@remix-run/node";
 
-import { getUserFromSession } from "~/utils/session.server";
+import { getUserFromSession, logout } from "~/utils/auth.server";
 
 export async function loader({ request }: ActionArgs) {
   const userId = await getUserFromSession(request);
   if (!userId) {
-    return redirect("/login");
+    return await logout(request);
   }
   return null;
 }

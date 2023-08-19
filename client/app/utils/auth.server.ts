@@ -2,11 +2,7 @@ import axios from "axios";
 import type { AxiosResponse } from "axios";
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 
-import { badRequest } from "./request.server";
-
 const SESSION_SECRET = process.env.SESSION_SECRET!;
-
-console.log({ SESSION_SECRET });
 
 const sessionStorage = createCookieSessionStorage({
   cookie: {
@@ -28,42 +24,48 @@ export async function login(username: string, password: string) {
       }
     );
     const accessToken: string = response.headers["set-cookie"]![0];
-    const refreshToken: string = response.headers["set-cookie"]![1];
+    //const refreshToken: string = response.headers["set-cookie"]![1];
 
     const user = response.data;
     return createUserSession(
       user.id,
       user.role,
       accessToken,
-      refreshToken,
-      "/courriers"
+      "/client/courriers"
     );
-  } catch (error) {
-    return badRequest(error);
+  } catch (error: any) {
+    throw error;
   }
 }
 
-/* export async function logout(request: Request) {
-  const session = await getUserSession(request);
+export async function logout(request: Request) {
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie")
+  );
+  const cookie = request.headers.get("Cookie");
+  await axios.get("http://localhost:4000/v1/auth", {
+    headers: { Cookie: cookie || "" },
+  });
+  const headers = new Headers();
+  headers.append("Set-Cookie", await sessionStorage.destroySession(session));
+  headers.append(
+    "Set-cookie",
+    "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+  );
   return redirect("/login", {
-    headers: {
-      "Set-Cookie": await storage.destroySession(session),
-    },
+    headers,
   });
 }
- */
+
 async function createUserSession(
   userId: string,
   userRole: string,
   accessToken: string,
-  refreshToken: string,
   redirectPath: string
 ) {
   const session = await sessionStorage.getSession();
   session.set("userId", userId);
   session.set("userRole", userRole);
-  session.set("accessToken", accessToken);
-  session.set("refreshToken", refreshToken);
 
   const headers = new Headers();
   headers.append("Set-Cookie", await sessionStorage.commitSession(session));
@@ -91,9 +93,10 @@ export async function destroyUserSession(
   const session = await sessionStorage.getSession(
     request.headers.get("Cookie")
   );
+  const headers = new Headers();
+  headers.append("Set-Cookie", await sessionStorage.destroySession(session));
+  headers.append("Set-cookie", "accessToken=");
   return redirect(redirectPath, {
-    headers: {
-      "Set-Cookie": await sessionStorage.destroySession(session),
-    },
+    headers,
   });
 }
