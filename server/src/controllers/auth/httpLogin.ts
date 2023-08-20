@@ -31,7 +31,7 @@ async function httpLogin(req: Request, res: Response) {
 
       return res
         .cookie("accessToken", accessToken, {
-          maxAge: 20 * 60 * 1000,
+          maxAge: 24 * 60 * 60 * 1000,
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
         })

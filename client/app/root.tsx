@@ -16,24 +16,24 @@ export const links: LinksFunction = () => [
 
 export const meta: V2_MetaFunction = () => {
   return [
-    { title: "Step Post" },
+    { title: "Remix Post" },
     {
       name: "description",
-      content: "Opérateur postal privé de proximité basé sur",
+      content: "Opérateur postal privé de proximité basé sur Gelos",
     },
   ];
 };
 
 export default function App() {
   return (
-    <html lang="en" data-theme="stepPost">
+    <html lang="fr" data-theme="night">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body className="min-h-screen bg-neutral">
+      <body className="min-h-screen">
         <Outlet />
         <ScrollRestoration />
         <Scripts />

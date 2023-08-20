@@ -9,7 +9,7 @@ const sessionStorage = createCookieSessionStorage({
     secure: process.env.NODE_ENV === "production",
     secrets: [SESSION_SECRET],
     sameSite: "lax",
-    maxAge: 30 * 24 * 60 * 60,
+    maxAge: 24 * 60 * 60,
     httpOnly: true,
   },
 });
@@ -81,8 +81,10 @@ export async function getUserFromSession(request: Request) {
   );
   const userId = session.get("userId");
   if (!userId) {
-    return null;
+    await logout(request);
   }
+  console.log({ userId });
+
   return userId;
 }
 

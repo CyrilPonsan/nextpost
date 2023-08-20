@@ -20,7 +20,7 @@ const ClientHeaders = () => {
   return (
     <div className="w-full flex items-center justify-center ">
       <Logo />
-      <div className="h-[5vh] flex flex-1 gap-x-4 items-center justify-center bg-primary pr-4">
+      <div className="h-[5vh] flex flex-1 gap-x-4 items-center justify-center bg-primary/10 text-secondary pr-4">
         <ul className="flex items-center gap-x-4">
           {menu.map(({ index, path, title }) => (
             <li key={index}>

@@ -22,7 +22,7 @@ export async function action({ request }: ActionArgs) {
 
 const ClientLayout = () => {
   return (
-    <div className="w-full min-h-full flex flex-col items-center justify-center bg-info/20">
+    <div className="w-full min-h-full flex flex-col items-center justify-center">
       <ClientHeaders />
       <Outlet />
     </div>

@@ -9,12 +9,12 @@ const LoadinfButton: FC<Props> = ({ isLoading, type = "button" }) => {
   return (
     <>
       {isLoading ? (
-        <button className="btn btn-primary">
-          <span className="loading loading-spinner text-white bg-primary"></span>
+        <button className="btn btn-secondary">
+          {/* <span className="loading loading-spinner text-white bg-secondary"></span> */}
           Connexion...
         </button>
       ) : (
-        <button className="btn btn-primary" type={type}>
+        <button className="btn btn-secondary" type={type}>
           Se Connecter
         </button>
       )}

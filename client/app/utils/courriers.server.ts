@@ -10,7 +10,7 @@ export async function getCourriers(
   direction: string
 ) {
   try {
-    console.log("toto");
+    console.log({ page, limit, type, field, direction });
 
     const response: AxiosResponse = await axios.get(
       `http://localhost:4000/v1/courrier?page=${page}&limit=${limit}&type=${type}&field=${field}&direction=${direction}`,

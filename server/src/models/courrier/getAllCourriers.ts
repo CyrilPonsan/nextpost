@@ -3,7 +3,7 @@ import sequelize from "sequelize";
 import { Courrier } from "../../db/models/courrier";
 import { Statut } from "../../db/models/statut";
 import { StatutCourrier } from "../../db/models/statutCourrier";
-import { getOffset } from "../../helpers/pagination";
+import { getOffset, getTotalPages } from "../../helpers/pagination";
 
 async function getAllCourriers(
   id: number,
@@ -54,11 +54,21 @@ async function getAllCourriers(
 
   const offset = getOffset(page, limit);
 
-  for (let i = offset; i < offset + limit; i++) {
+  let max: number;
+  if (offset + limit <= courriers.length) {
+    max = offset + limit;
+  } else {
+    max = courriers.length;
+  }
+
+  for (let i = offset; i < max; i++) {
     result.push(courriers[i]);
   }
 
-  return { courriers: result, totalPages: courriers.length };
+  return {
+    courriers: result,
+    totalPages: getTotalPages(courriers.length, limit),
+  };
 }
 
 export default getAllCourriers;

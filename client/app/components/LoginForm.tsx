@@ -12,7 +12,7 @@ const LoginForm = () => {
 
   return (
     <Form
-      className="text-primary flex flex-col gap-y-2 justify-center items-center p-4 rounded-xl shadow-xl bg-info/70"
+      className="text-primary flex flex-col gap-y-2 justify-center items-center p-4 rounded-xl shadow-xl bg-primary/10"
       method="post"
     >
       <div className={style}>

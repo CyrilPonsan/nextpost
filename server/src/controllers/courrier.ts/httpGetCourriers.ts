@@ -20,7 +20,6 @@ async function httpGetCourriers(req: CustomRequest, res: Response) {
     } else {
       return res.status(403).json({ message: noAccess });
     }
-    console.log({ id });
 
     const { page, limit, type, direction, field } = req.query;
 
