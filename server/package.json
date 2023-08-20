@@ -7,7 +7,7 @@
     "build": "tsc --project ./",
     "start:dev": "nodemon src/server.ts",
     "start:prod": "node dist/server.js",
-    "fixtures": "npx prisma migrate reset && npx ts-node test.ts"
+    "fixtures": "npx ts-node src/db/fixtures.ts"
   },
   "author": "cyril.ponsan@gmail.com",
   "license": "MIT",

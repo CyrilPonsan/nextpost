@@ -22,4 +22,8 @@ const connection = new Sequelize({
   models: [Expediteur, Courrier, Facteur, Statut, StatutCourrier],
 });
 
+/* const connection = new Sequelize(process.env.DB_URL!, {
+  models: [Expediteur, Courrier, Facteur, Statut, StatutCourrier],
+});
+ */
 export default connection;

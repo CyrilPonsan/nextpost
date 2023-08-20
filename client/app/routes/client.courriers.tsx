@@ -9,6 +9,7 @@ import {
 
 import Pagination from "~/components/Pagination";
 import CourrierItem from "~/components/courrier/CourrierItem";
+import { validateInput } from "~/helpers/validations/route.courrier";
 import { getUserFromSession, logout } from "~/utils/auth.server";
 import { getCourriers } from "~/utils/courriers.server";
 
@@ -21,32 +22,34 @@ export async function loader({ request }: ActionArgs) {
   // on vérifie que la session de l'utilisateur est valide, sinon il est redirigé vers la page de connexion
   await getUserFromSession(request);
 
-  const searchParams = new URL(request.url).searchParams;
-  const page = searchParams.get("page") || "1";
-  const limit = searchParams.get("limit") || "5";
+  let searchParams = new URL(request.url).searchParams;
+  let page = searchParams.get("page") || "1";
+  let limit = searchParams.get("limit") || "5";
   let type = searchParams.get("type") || "true";
-  const field = searchParams.get("field") || "bordereau";
-  const direction = searchParams.get("direction") || "DESC";
+  let field = searchParams.get("field") || "bordereau";
+  let direction = searchParams.get("direction") || "DESC";
 
-  if (type !== "true" && type !== "false") {
-    type = "true";
-  }
+  const result = validateInput({ page, limit, type, field, direction });
+
+  console.log({ result });
 
   try {
     const data = await getCourriers(
       cookie!,
-      page,
-      limit,
-      type,
-      field,
-      direction
+      result.page,
+      result.limit,
+      result.type,
+      result.field,
+      result.direction
     );
 
-    let intPage = parseInt(page);
+    let intPage = parseInt(result.page);
 
     if (intPage > data.totalPages) {
       return redirect("?type=true");
     }
+
+    console.log({ intPage });
 
     return json({
       courriers: data.courriers,
@@ -70,14 +73,21 @@ export const ErrorBoundary = () => {
   }
 };
 
+export function headers() {
+  return {
+    "Cache-Control": "max-age-3600",
+  };
+}
+
 const Courriers = () => {
   const { courriers, currentType } = useLoaderData();
+  console.log("RENDERING...");
 
   return (
     <main className="w-full min-h-[95vh] flex flex-col justify-center items-center gap-y-8">
       {courriers ? (
-        <section className="w-3/6 flex flex-col items-center gap-y-4">
-          <article className="w-4/6 flex gap-x-8 text-secondary font-bold">
+        <section className="w-5/6 2xl:w-3/6 flex flex-col items-center gap-y-4">
+          <article className="w-full 2xl:w-4/6 flex gap-x-8 text-secondary font-bold">
             <Link className={currentType ? "underline" : ""} to="?type=true">
               En cours de distribution
             </Link>
@@ -85,13 +95,10 @@ const Courriers = () => {
               Distribués
             </Link>
           </article>
-          <article className="w-4/6">
+          <article className="w-full 2xl:w-4/6">
             <ul className="w-full flex flex-col gap-y-4">
               {courriers.map((courrier: any) => (
-                <li
-                  className="shadow-lg rounded-lg bg-secondary/10 border border-secondary/50 p-2"
-                  key={courrier.id}
-                >
+                <li className="" key={courrier.id}>
                   <CourrierItem courrier={courrier} />
                 </li>
               ))}

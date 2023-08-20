@@ -2,7 +2,7 @@ import type Courrier from "~/interfaces/courrier";
 
 const CourrierItem = ({ courrier }: { courrier: Courrier }) => {
   return (
-    <article className="w-full flex flex-col font-bold">
+    <article className="w-full flex flex-col font-bold shadow-lg rounded-lg bg-secondary/10 border border-secondary/50 p-2 hover:border-secondary/80">
       <span className="w-full flex justify-between items-center text-xs">
         <p className="text-secondary">
           {new Date(courrier.date).toLocaleDateString()}

@@ -1,7 +1,7 @@
 import { redirect, type ActionArgs } from "@remix-run/node";
 
 import LoginForm from "~/components/LoginForm";
-import { validateCredentials } from "~/helpers/validation/login";
+import { validateCredentials } from "~/helpers/validations/login";
 import { login } from "~/utils/auth.server";
 
 export const action = async ({ request }: ActionArgs) => {
@@ -31,12 +31,12 @@ export const action = async ({ request }: ActionArgs) => {
 const LoginPage = () => {
   return (
     <main className="min-h-screen flex justify-center items-center">
-      <section className="w-5/6 md:w-3/6 lg:w-2/6 xl:w-4/6 2xl:w-3/6 grid grid-cols-1 xl:grid-cols-2 gap-8 xl:gap-32">
-        <div className="h-fit flex flex-col gap-y-4">
-          <div className="text-3xl font-extrabold text-primary">Connexion</div>
+      <section className="w-4/6 md:w-5/6 lg:w-4/6 xl:w-4/6 2xl:w-3/6 grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-32">
+        <div className="h-fit flex flex-col items-center gap-y-4">
+          <div className="text-2xl font-extrabold text-primary">Connexion</div>
           <LoginForm />
         </div>
-        <div className="w-full lg:h-[30rem] bg-[url('/images/step-post.jpg')] bg-cover bg-center bg-no-repeat rounded-xl shadow-xl"></div>
+        <div className="w-full h-[30rem] bg-[url('/images/step-post.jpg')] bg-cover bg-center bg-no-repeat rounded-xl shadow-xl"></div>
       </section>
     </main>
   );
