@@ -1,18 +1,18 @@
-import { type ActionArgs } from "@remix-run/node";
+import { json, type ActionArgs } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 
 import ClientHeaders from "~/components/navigation/ClientHeaders";
-import { getUserFromSession, logout } from "~/utils/auth.server";
+import { getUserProfileFromSession, logout } from "~/utils/auth.server";
 
 export async function loader({ request }: ActionArgs) {
   // seul un utilisateur connecté a accès à cette route
-  const user = await getUserFromSession(request);
+  const user = await getUserProfileFromSession(request);
 
   if (!user) {
     // si l'utilisateur n'existe pas on efface les cookies servant à l'authentification, celui généré par le frontend et ceux générés par l'api
     return await logout(request);
   }
-  return null;
+  return json(user);
 }
 
 export async function action({ request }: ActionArgs) {

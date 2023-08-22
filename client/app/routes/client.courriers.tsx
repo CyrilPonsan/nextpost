@@ -31,8 +31,6 @@ export async function loader({ request }: ActionArgs) {
 
   const result = validateInput({ page, limit, type, field, direction });
 
-  console.log({ result });
-
   try {
     const data = await getCourriers(
       cookie!,

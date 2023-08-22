@@ -30,6 +30,7 @@ export async function login(username: string, password: string) {
     return createUserSession(
       user.id,
       user.role,
+      user.nom,
       accessToken,
       "/client/courriers"
     );
@@ -59,6 +60,7 @@ export async function logout(request: Request) {
 
 async function createUserSession(
   userId: string,
+  userNom: string,
   userRole: string,
   accessToken: string,
   redirectPath: string
@@ -83,9 +85,18 @@ export async function getUserFromSession(request: Request) {
   if (!userId) {
     await logout(request);
   }
-  console.log({ userId });
-
   return userId;
+}
+
+export async function getUserProfileFromSession(request: Request) {
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie")
+  );
+  const nom = session.get("userNom");
+  if (!nom) {
+    await logout(request);
+  }
+  return nom;
 }
 
 export async function destroyUserSession(

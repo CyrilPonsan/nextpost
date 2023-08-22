@@ -1,4 +1,4 @@
-import { Form, Link } from "@remix-run/react";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 
 import LogoutIcon from "../svg/LogoutIcon";
 import Logo from "./Logo";
@@ -17,6 +17,8 @@ const menu = [
 ];
 
 const ClientHeaders = () => {
+  const { user } = useLoaderData();
+
   return (
     <div className="w-full flex items-center justify-center ">
       <Logo />
@@ -30,6 +32,9 @@ const ClientHeaders = () => {
             </li>
           ))}
         </ul>
+      </div>
+      <div className="flex gap-x-4 items-center">
+        <p className="capitalize font-bold text-info">{user}</p>
         <Form method="delete" className="flex items-center">
           <button className="text-sm hover:text-info" aria-label="deconnexion">
             <div className="w-6 h-6">
