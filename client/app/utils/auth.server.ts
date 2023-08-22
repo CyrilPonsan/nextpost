@@ -27,6 +27,7 @@ export async function login(username: string, password: string) {
     //const refreshToken: string = response.headers["set-cookie"]![1];
 
     const user = response.data;
+
     return createUserSession(
       user.id,
       user.role,
@@ -60,14 +61,15 @@ export async function logout(request: Request) {
 
 async function createUserSession(
   userId: string,
-  userNom: string,
   userRole: string,
+  userNom: string,
   accessToken: string,
   redirectPath: string
 ) {
   const session = await sessionStorage.getSession();
   session.set("userId", userId);
   session.set("userRole", userRole);
+  session.set("userNom", userNom);
 
   const headers = new Headers();
   headers.append("Set-Cookie", await sessionStorage.commitSession(session));

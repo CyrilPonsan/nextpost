@@ -47,8 +47,6 @@ export async function loader({ request }: ActionArgs) {
       return redirect("?type=true");
     }
 
-    console.log({ intPage });
-
     return json({
       courriers: data.courriers,
       totalPages: data.totalPages,
@@ -62,7 +60,6 @@ export async function loader({ request }: ActionArgs) {
 
 export const ErrorBoundary = () => {
   const error: any = useRouteError();
-  console.log(error);
 
   if (isRouteErrorResponse(error)) {
     return <p>{error.data?.message}</p>;
@@ -79,7 +76,6 @@ export function headers() {
 
 const Courriers = () => {
   const { courriers, currentType } = useLoaderData();
-  console.log("RENDERING...");
 
   return (
     <main className="w-full min-h-[95vh] flex flex-col justify-center items-center gap-y-8">
