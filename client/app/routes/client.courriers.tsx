@@ -6,6 +6,7 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
+import { Button } from "~/components/@/components/ui/button";
 
 import Pagination from "~/components/Pagination";
 import CourrierItem from "~/components/courrier/CourrierItem";
@@ -68,11 +69,11 @@ export const ErrorBoundary = () => {
   }
 };
 
-export function headers() {
+/* export function headers() {
   return {
-    "Cache-Control": "max-age-3600",
+    "Cache-Control": "max-age-60",
   };
-}
+} */
 
 const Courriers = () => {
   const { courriers, currentType } = useLoaderData();
@@ -81,13 +82,23 @@ const Courriers = () => {
     <main className="w-full min-h-[95vh] flex flex-col justify-center items-center gap-y-8">
       {courriers ? (
         <section className="w-5/6 2xl:w-3/6 flex flex-col items-center gap-y-4">
-          <article className="w-full 2xl:w-4/6 flex gap-x-8 text-secondary font-bold">
-            <Link className={currentType ? "underline" : ""} to="?type=true">
-              En cours de distribution
-            </Link>
-            <Link className={!currentType ? "underline" : ""} to="?type=false">
-              Distribués
-            </Link>
+          <article className="w-full 2xl:w-4/6 flex justify-start">
+            <span className="w-fit flex p-2 bg-secondary rounded-lg">
+              <Button
+                variant={currentType ? undefined : "outline"}
+                asChild
+                className="rounded-l-lg rounded-r-none"
+              >
+                <Link to="?type=true">En cours de distribution</Link>
+              </Button>
+              <Button
+                variant={!currentType ? undefined : "outline"}
+                asChild
+                className="rounded-l-none rounded-r-lg"
+              >
+                <Link to="?type=false">Distribués</Link>
+              </Button>
+            </span>
           </article>
           <article className="w-full 2xl:w-4/6">
             <ul className="w-full flex flex-col gap-y-4">

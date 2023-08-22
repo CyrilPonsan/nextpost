@@ -1,4 +1,6 @@
 import { Link, useLoaderData } from "@remix-run/react";
+import { Button } from "./@/components/ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Pagination = () => {
   const { currentPage, currentType, totalPages } = useLoaderData();
@@ -6,16 +8,13 @@ const Pagination = () => {
   return (
     <>
       {currentPage > 1 ? (
-        <Link
-          className="btn btn-circle btn-sm btn-secondary"
-          to={`?page=${currentPage - 1}&type=${currentType}`}
-        >
-          {"<"}
-        </Link>
+        <Button asChild size="icon" className="rounded-full">
+          <Link to={`?page=${currentPage - 1}&type=${currentType}`}>{"<"}</Link>
+        </Button>
       ) : (
-        <button className="btn btn-circle btn-sm btn-secondary" disabled={true}>
-          {"<"}
-        </button>
+        <Button size="icon" className="rounded-full" disabled={true}>
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
       )}
 
       {totalPages > 1 ? (
@@ -24,16 +23,15 @@ const Pagination = () => {
         </p>
       ) : null}
       {currentPage < totalPages ? (
-        <Link
-          className="btn btn-circle btn-sm btn-secondary"
-          to={`?page=${currentPage + 1}&type=${currentType}`}
-        >
-          {">"}
-        </Link>
+        <Button asChild size="icon" className="rounded-full">
+          <Link to={`?page=${currentPage + 1}&type=${currentType}`}>
+            <ChevronRight className="h-4 w-4" />
+          </Link>
+        </Button>
       ) : (
-        <button className="btn btn-circle btn-sm btn-secondary" disabled={true}>
-          {">"}
-        </button>
+        <Button size="icon" className="rounded-full" disabled={true}>
+          <ChevronRight className="h-4 w-4" />
+        </Button>
       )}
     </>
   );

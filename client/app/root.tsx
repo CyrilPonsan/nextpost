@@ -1,3 +1,4 @@
+import { cssBundleHref } from "@remix-run/css-bundle";
 import type { V2_MetaFunction, LinksFunction } from "@remix-run/node";
 import {
   Links,
@@ -8,10 +9,12 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import stylesheet from "~/tailwind.css";
+import styles from "./tailwind.css";
+import { ThemeProvider } from "./components/theme-provider";
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesheet },
+  { rel: "stylesheet", href: styles },
+  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
 export const meta: V2_MetaFunction = () => {
@@ -33,8 +36,10 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="min-h-screen">
-        <Outlet />
+      <body className="min-h-screen bg-background">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Outlet />
+        </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
