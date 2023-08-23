@@ -1,6 +1,8 @@
 import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
-import LoadinfButton from "./buttons/LoadinfButton";
+import { Input } from "./@/components/ui/input";
+import { Label } from "./@/components/ui/label";
 
+import LoadinfButton from "./buttons/LoadinfButton";
 const LoginForm = () => {
   const credentialsError = useActionData();
   const navigation = useNavigation();
@@ -8,17 +10,15 @@ const LoginForm = () => {
   const isLoading = navigation.state !== "idle";
 
   const style = "flex flex-col gap-y-2 justify-center items-center";
-  const inputStyle = "input bg-neutral/20";
 
   return (
     <Form
-      className="text-primary flex flex-col gap-y-2 justify-center items-center p-4 rounded-xl shadow-xl bg-primary/10"
+      className="text-primary flex flex-col gap-y-2 justify-center items-center p-4 rounded-xl shadow-xl bg-background border border-ring"
       method="post"
     >
       <div className={style}>
-        <label htmlFor="username">Email</label>
-        <input
-          className={inputStyle}
+        <Label htmlFor="username">Email</Label>
+        <Input
           id="username"
           type="email"
           name="username"
@@ -27,9 +27,8 @@ const LoginForm = () => {
         />
       </div>
       <div className={style}>
-        <label htmlFor="password">Mot de Passe</label>
-        <input
-          className={inputStyle}
+        <Label htmlFor="password">Mot de Passe</Label>
+        <Input
           id="password"
           type="password"
           name="password"

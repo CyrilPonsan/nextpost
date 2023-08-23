@@ -35,8 +35,7 @@ const ClientHeaders = () => {
           ))}
         </ul>
       </div>
-      <div className="flex gap-x-4 items-center">
-        <ModeToggle />
+      <div className="flex gap-x-2 items-center">
         <p className="capitalize font-bold">{data}</p>
         <Form method="delete" className="flex items-center">
           <button className="text-sm hover:text-info" aria-label="deconnexion">
@@ -45,6 +44,7 @@ const ClientHeaders = () => {
             </div>
           </button>
         </Form>
+        <ModeToggle />
       </div>
     </div>
   );
