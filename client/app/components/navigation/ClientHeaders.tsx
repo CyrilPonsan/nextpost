@@ -1,6 +1,7 @@
 import { Form, Link, useLoaderData } from "@remix-run/react";
+import { Button } from "../@/components/ui/button";
+import { LogOut } from "lucide-react";
 
-import LogoutIcon from "../svg/LogoutIcon";
 import Logo from "./Logo";
 import { ModeToggle } from "../ModeToggle";
 
@@ -38,11 +39,14 @@ const ClientHeaders = () => {
       <div className="flex gap-x-2 items-center">
         <p className="capitalize font-bold">{data}</p>
         <Form method="delete" className="flex items-center">
-          <button className="text-sm hover:text-info" aria-label="deconnexion">
-            <div className="w-6 h-6">
-              <LogoutIcon />
-            </div>
-          </button>
+          <Button
+            variant="outline"
+            size="sm"
+            aria-label="deconnexion"
+            className="bg-transparent"
+          >
+            <LogOut className="h-4 w-4" />
+          </Button>
         </Form>
         <ModeToggle />
       </div>
