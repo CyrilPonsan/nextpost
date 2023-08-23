@@ -19,3 +19,5 @@ export async function getCourriers(
     throw new Error(error.response.data.message);
   }
 }
+
+export async function getCourrierDetails(id: number, cookie: string) {}

@@ -10,7 +10,7 @@ import {
 } from "@remix-run/react";
 
 import styles from "./tailwind.css";
-import { ThemeProvider } from "./components/theme-provider";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },

@@ -1,15 +1,16 @@
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, CheckCheck } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "./@/components/ui/button";
 
 export function ModeToggle() {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   return (
     <DropdownMenu>
@@ -24,25 +25,36 @@ export function ModeToggle() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem
-          className="cursor-pointer hover:outline-none hover:font-bold"
-          onClick={() => setTheme("light")}
-        >
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className="cursor-pointer hover:outline-none hover:font-bold"
-          onClick={() => setTheme("dark")}
-        >
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className="cursor-pointer hover:outline-none hover:font-bold"
-          onClick={() => setTheme("system")}
-        >
-          System
-        </DropdownMenuItem>
+      <DropdownMenuContent
+        align="end"
+        className="w-24 p-4 border border-border bg-background rounded-lg text-xs"
+      >
+        <DropdownMenuGroup>
+          <DropdownMenuItem onClick={() => setTheme("light")}>
+            <span className="w-full cursor-pointer hover:outline-none flex justify-between items-center">
+              <p className="hover:font-bold">Light</p>
+              {theme === "light" ? <CheckCheck className="w-4 h-4" /> : null}
+            </span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer hover:outline-none hover:font-bold"
+            onClick={() => setTheme("dark")}
+          >
+            <span className="w-full cursor-pointer hover:outline-none flex justify-between items-center">
+              <p className="hover:font-bold">Dark</p>
+              {theme === "dark" ? <CheckCheck className="w-4 h-4" /> : null}
+            </span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer hover:outline-none hover:font-bold"
+            onClick={() => setTheme("system")}
+          >
+            <span className="w-full cursor-pointer hover:outline-none flex justify-between items-center">
+              <p className="hover:font-bold">System</p>
+              {theme === "system" ? <CheckCheck className="w-4 h-4" /> : null}
+            </span>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   );
