@@ -1,29 +1,31 @@
 import { Request, Response } from "express";
 
-import {
-  badQuery,
-  credentialsError,
-  regexPassword,
-  serverIssue,
-} from "../../utils/data";
+import { badQuery, serverIssue } from "../../utils/data";
 import { setToken } from "../../utils/auth.services/setToken";
 import login from "../../models/auth/login";
-import { validationResult } from "express-validator";
+import { Result, validationResult } from "express-validator";
+import { logger } from "../../utils/logs/logger";
 
 async function httpLogin(req: Request, res: Response) {
-  const result = validationResult(req);
+  try {
+    const result: Result = validationResult(req);
 
-  if (!result.isEmpty()) {
-    return res.status(400).json({ message: badQuery });
+    if (!result.isEmpty()) {
+      throw { message: result.array()[0].msg, status: 400 };
+    }
+  } catch (error: any) {
+    logger.error(error);
+    return res
+      .status(error.status ?? 500)
+      .json({ message: error.message ?? badQuery });
   }
+  console.log(req.body);
 
   const { username, password } = req.body;
-  if (!password || !regexPassword.test(password)) {
-    return res.status(401).json({ message: credentialsError });
-  }
 
   try {
     const user: any = await login(username, password);
+    console.log(user);
 
     if (user) {
       const accessToken = setToken(user.id, user.role);
@@ -43,9 +45,21 @@ async function httpLogin(req: Request, res: Response) {
         .status(200)
         .json(user);
     }
-    return res.status(401).json({ message: credentialsError });
-  } catch (err) {
-    return res.status(500).json({ message: serverIssue + err });
+  } catch (error: any) {
+    let returnedError: any;
+    if (error.status === 401) {
+      returnedError = {
+        ...error,
+        from: req.socket.remoteAddress,
+      };
+    } else {
+      returnedError = error;
+    }
+
+    logger.error(returnedError);
+    return res
+      .status(returnedError.status ?? 500)
+      .json({ message: returnedError.message ?? serverIssue });
   }
 }
 

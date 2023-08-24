@@ -9,8 +9,12 @@ const authRouter = express.Router();
 
 authRouter.post(
   "/",
-  body("username").isEmail().notEmpty().escape(),
-  body("password").isString().notEmpty().escape(),
+  body("username").isEmail().withMessage("Email invalide").notEmpty().escape(),
+  body("password")
+    .isString()
+    .withMessage("Mot de passe invalide")
+    .notEmpty()
+    .escape(),
   httpLogin
 );
 authRouter.get("/", httpLogout);
