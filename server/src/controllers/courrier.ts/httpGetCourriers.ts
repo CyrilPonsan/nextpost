@@ -13,11 +13,9 @@ async function httpGetCourriers(req: CustomRequest, res: Response) {
   }
 
   try {
-    let id: any = req.auth!.userId;
+    const id: any = req.auth!.userId;
 
-    if (id) {
-      id = parseInt(id);
-    } else {
+    if (!id) {
       return res.status(403).json({ message: noAccess });
     }
 

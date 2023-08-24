@@ -8,17 +8,17 @@ const Pagination = () => {
   return (
     <>
       {currentPage > 1 ? (
-        <Button asChild size="icon" className="rounded-full">
+        <Button asChild size="sm" className="rounded-full">
           <Link
             to={`?page=${currentPage - 1}&type=${currentType}`}
             aria-label="visitez la page précédente"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-3 w-3" />
           </Link>
         </Button>
       ) : (
-        <Button size="icon" className="rounded-full" disabled={true}>
-          <ChevronLeft className="h-4 w-4" />
+        <Button size="sm" className="rounded-full" disabled={true}>
+          <ChevronLeft className="h-3 w-3" />
         </Button>
       )}
 
@@ -28,17 +28,17 @@ const Pagination = () => {
         </p>
       ) : null}
       {currentPage < totalPages ? (
-        <Button asChild size="icon" className="rounded-full">
+        <Button asChild size="sm" className="rounded-full">
           <Link
             to={`?page=${currentPage + 1}&type=${currentType}`}
             aria-label="visitez la page suivante"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-3 w-3" />
           </Link>
         </Button>
       ) : (
-        <Button size="icon" className="rounded-full" disabled={true}>
-          <ChevronRight className="h-4 w-4" />
+        <Button size="sm" className="rounded-full" disabled={true}>
+          <ChevronRight className="h-3 w-3" />
         </Button>
       )}
     </>

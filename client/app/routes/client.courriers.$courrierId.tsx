@@ -24,7 +24,7 @@ export async function loader({ request, params }: ActionArgs) {
 
   try {
     const response = await getCourrierDetails(+courrierId, cookie);
-    return json(response);
+    return null;
   } catch (error: any) {
     throw error;
   }
