@@ -8,6 +8,8 @@ function isLogged(req: CustomRequest, res: Response, next: NextFunction) {
   // on récupère le cookie contenant le jeton d'accès
   const authCookie = req.cookies.accessToken;
 
+  console.log(req.cookies);
+
   // en l'absence du dit jeton on renvoie une erreur 403
   if (!authCookie) {
     return res.status(403).json({ message: noAccess });

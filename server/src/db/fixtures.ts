@@ -321,10 +321,11 @@ async function createCourriers(
 }
 
 async function loadFixtures() {
+  await connection.sync({ force: true });
   await createUsers();
   await createStatuts();
-  await createCourriers(15, 1, 5, 1, 1);
-  await createCourriers(100, 1, 6, 750, 751);
+  await createCourriers(15, 1, 5, 1, 10000);
+  await createCourriers(100, 1, 6, 750, 10751);
 }
 
 loadFixtures();
