@@ -23,7 +23,7 @@ const Pagination = () => {
       )}
 
       {totalPages > 1 ? (
-        <p className="text-ring text-xs">
+        <p className="text-primary text-xs">
           {currentPage} / {totalPages}
         </p>
       ) : null}
