@@ -17,7 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={
+          inter.className +
+          "w-screen min-h-screen bg-[#242424] flex flex-col items-center justify-center"
+        }
+      >
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
