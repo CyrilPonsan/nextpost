@@ -12,15 +12,17 @@ export const options: NextAuthOptions = {
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        email: { label: "email", type: "email", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
+        console.log(credentials);
+
         const response: AxiosResponse = await axios.post(
           "http://localhost:4000/v1/auth/",
           {
-            email: credentials?.username,
+            username: credentials?.email,
             password: credentials?.password,
           }
         );
@@ -28,6 +30,8 @@ export const options: NextAuthOptions = {
         let user = response.data;
 
         if (user) {
+          console.log({ user });
+
           // Any object returned will be saved in `user` property of the JWT
           const accessToken: string = response.headers["set-cookie"]![0];
           user = { ...user, accessToken };

@@ -7,6 +7,8 @@ import { Result, validationResult } from "express-validator";
 import { logger } from "../../utils/logs/logger";
 
 async function httpLogin(req: Request, res: Response) {
+  console.log(req.body);
+
   try {
     const result: Result = validationResult(req);
 

@@ -21,7 +21,7 @@ async function login(email: string, password: string) {
           id: user.id,
           nom: user.nom,
           prenom: user.prenom,
-          role: user.roles[0],
+          roles: user.roles,
         };
       }
     }
