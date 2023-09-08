@@ -30,8 +30,8 @@ async function httpLogin(req: Request, res: Response) {
     console.log(user);
 
     if (user) {
-      const accessToken = setToken(user.id, user.role);
-      const refreshToken = setToken(user.id, user.role);
+      const accessToken = setToken(user.id, user.roles);
+      const refreshToken = setToken(user.id, user.roles);
 
       return res
         .cookie("accessToken", accessToken, {

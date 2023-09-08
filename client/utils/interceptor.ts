@@ -11,7 +11,6 @@ interface CustomRequest {
 export async function sendRequest(req: CustomRequest) {
   const session = await getServerSession(options);
   const cookie = session?.user.accessToken;
-  console.log({ cookie });
 
   const response = await fetch(`${BASE_URL}${req.path}`, {
     headers: { Cookie: cookie ?? "" },
