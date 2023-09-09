@@ -31,12 +31,10 @@ export default function LoginForm() {
     try {
       setLoading(true);
 
-      const validatedData = loginFormSchema.parse({
+      loginFormSchema.parse({
         email: emailValue,
         password: passwordValue,
       });
-
-      console.log({ validatedData });
 
       const res = await signIn("credentials", {
         redirect: false,
@@ -98,7 +96,9 @@ export default function LoginForm() {
         <Link className="text-xs text-center hover:underline" href="#">
           {"Besoin d'aide ?"}
         </Link>
+
         <div className="divider" />
+
         <SubmitButton
           isLoading={loading}
           label="Se Connecter"

@@ -28,9 +28,10 @@ export const options: NextAuthOptions = {
         let user = response.data;
 
         if (user) {
-          // Any object returned will be saved in `user` property of the JWT
           const accessToken: string = response.headers["set-cookie"]![0];
-          user = { ...user, accessToken };
+          const refreshToken: string = response.headers["set-cookie"]![1];
+          user = { ...user, accessToken, refreshToken };
+          console.log("cookies", response.headers["set-cookie"]);
 
           return user;
         } else {

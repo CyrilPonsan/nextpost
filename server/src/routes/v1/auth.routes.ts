@@ -4,6 +4,7 @@ import { body } from "express-validator";
 import httpLogin from "../../controllers/auth/httpLogin";
 import httpLogout from "../../controllers/auth/httpLogout";
 import httpHandshake from "../../controllers/auth/httpHandshake";
+import refreshTokens from "../../middlewares/refresh-tokens";
 
 const authRouter = express.Router();
 
@@ -19,5 +20,6 @@ authRouter.post(
 );
 authRouter.get("/", httpLogout);
 authRouter.get("/handshake", httpHandshake);
+authRouter.get("/refresh", refreshTokens);
 
 export default authRouter;
