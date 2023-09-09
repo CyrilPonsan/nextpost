@@ -1,4 +1,5 @@
 import { sendRequest } from "@/utils/interceptor";
+import Link from "next/link";
 import React from "react";
 
 export async function getData() {
@@ -11,7 +12,12 @@ export async function getData() {
 
 const ClientHomePage = async () => {
   await getData();
-  return <div>Client Home Page</div>;
+  return (
+    <>
+      <div>Client Home Page</div>
+      <Link href="/auth/signout">Déconnexion</Link>
+    </>
+  );
 };
 
 export default ClientHomePage;
