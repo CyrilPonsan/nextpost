@@ -1,27 +1,23 @@
-import BASE_URL from "@/config/urls";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import React from "react";
+
+import BASE_URL from "@/config/urls";
 import { options } from "../api/auth/[...nextauth]/options";
 
 export async function getData() {
-  try {
-    const session = await getServerSession(options);
-    const response = await fetch(
-      `${BASE_URL}/courrier?page=1&limit=10&type=true&field=bordereau&direction=DESC`,
-      {
-        headers: { Cookie: session?.accessToken! },
-      }
-    );
-    if (!response.ok) {
-      throw { message: "dans le cul lulu !" };
+  const session = await getServerSession(options);
+  const response = await fetch(
+    `${BASE_URL}/courrier?page=1&limit=10&type=true&field=bordereau&direction=DESC`,
+    {
+      headers: { Cookie: session?.accessToken! },
+      cache: "no-cache",
     }
-    return response.json();
-  } catch (error: any) {
-    console.log(error);
+  );
+  console.log(response.status);
 
-    throw error;
-  }
+  if (response.status === 403) throw new Error("session expirée, au-revoir");
+  return response.json();
 }
 
 const ClientHomePage = async () => {
