@@ -2,13 +2,13 @@ import { options } from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import React from "react";
 
-export async function getData() {
+async function getData() {
   const session = await getServerSession(options);
-  console.log(session);
+  return session;
 }
 
 const AdressesHomePage = async () => {
-  await getData();
+  //const data = await getData();
   return <div>{"Carnet d'adresses"}</div>;
 };
 

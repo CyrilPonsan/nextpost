@@ -5,13 +5,13 @@ import React from "react";
 import BASE_URL from "@/config/urls";
 import { options } from "../api/auth/[...nextauth]/options";
 
-export async function getData() {
+async function getData() {
   const session = await getServerSession(options);
   const response = await fetch(
     `${BASE_URL}/courrier?page=1&limit=10&type=true&field=bordereau&direction=DESC`,
     {
       headers: { Cookie: session?.accessToken! },
-      cache: "no-cache",
+      next: { revalidate: 120 },
     }
   );
   console.log(response.status);
