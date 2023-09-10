@@ -13,8 +13,6 @@ const EmailInput = (props: EmailInputProps) => {
 
   const style = validationError ? baseStyle + " input-error" : baseStyle;
 
-  console.log({ validationError, style });
-
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event.currentTarget.value);
   };

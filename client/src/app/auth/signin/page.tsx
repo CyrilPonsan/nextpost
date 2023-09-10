@@ -8,7 +8,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
-import { z, ZodError } from "zod";
+import { ZodError } from "zod";
 
 interface CustomError {
   type: string;
@@ -23,7 +23,7 @@ export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const callbackUrl = searchParams.get("callbackUrl") || "/profile";
+  const callbackUrl = searchParams.get("callbackUrl") || "/client";
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -31,12 +31,10 @@ export default function LoginForm() {
     try {
       setLoading(true);
 
-      const validatedData = loginFormSchema.parse({
+      loginFormSchema.parse({
         email: emailValue,
         password: passwordValue,
       });
-
-      console.log({ validatedData });
 
       const res = await signIn("credentials", {
         redirect: false,
@@ -98,7 +96,9 @@ export default function LoginForm() {
         <Link className="text-xs text-center hover:underline" href="#">
           {"Besoin d'aide ?"}
         </Link>
+
         <div className="divider" />
+
         <SubmitButton
           isLoading={loading}
           label="Se Connecter"
