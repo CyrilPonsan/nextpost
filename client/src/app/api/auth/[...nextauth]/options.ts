@@ -1,6 +1,40 @@
+import BASE_URL from "@/config/urls";
 import axios, { AxiosResponse } from "axios";
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+async function refreshAccessToken(token: any) {
+  try {
+    const url = `${BASE_URL}/auth/refresh`;
+
+    const response = await fetch(url, {
+      headers: {
+        Cookie: token.refreshToken,
+      },
+    });
+
+    const accessToken = response.headers.getSetCookie()[0];
+    const refreshToken = response.headers.getSetCookie()[1];
+
+    if (!response.ok) {
+      throw { message: "token expiré" };
+    }
+
+    return {
+      ...token,
+      accessToken,
+      expiresAt: Date.now() + 10 * 1000,
+      refreshToken,
+    };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      ...token,
+      error: "RefreshAccessTokenError",
+    };
+  }
+}
 
 export const options: NextAuthOptions = {
   providers: [
@@ -30,8 +64,12 @@ export const options: NextAuthOptions = {
         if (user) {
           const accessToken: string = response.headers["set-cookie"]![0];
           const refreshToken: string = response.headers["set-cookie"]![1];
-          user = { ...user, accessToken, refreshToken };
-          console.log("cookies", response.headers["set-cookie"]);
+          user = {
+            ...user,
+            accessToken,
+            refreshToken,
+            expiresAt: new Date().getTime() + 10 * 1000,
+          };
 
           return user;
         } else {
@@ -44,12 +82,39 @@ export const options: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      return { ...token, ...user };
+    async jwt({ token, user }: { token: any; user: any }) {
+      if (user) {
+        console.log("hello user");
+
+        return {
+          accessToken: user.accessToken,
+          refreshToken: user.refreshToken,
+          expiresAt: user.expiresAt,
+          user: {
+            id: user.id,
+            roles: user.roles,
+          },
+        };
+      }
+      if (Date.now() < token.expiresAt) {
+        console.log("all good");
+
+        return token;
+      }
+      console.log("token expiré");
+
+      return refreshAccessToken(token);
     },
 
-    async session({ session, token }) {
-      session.user = token as any;
+    async session({ session, token }: { session: Session; token: any }) {
+      if (token) {
+        session.user = token.user;
+        session.accessToken = token.accessToken;
+        session.refreshToken = token.refreshToken;
+        session.expiresAt = token.expiresAt;
+        console.log({ session });
+      }
+
       return session;
     },
   },

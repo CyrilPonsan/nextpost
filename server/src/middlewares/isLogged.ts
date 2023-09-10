@@ -8,7 +8,7 @@ function isLogged(req: CustomRequest, res: Response, next: NextFunction) {
   // on récupère le cookie contenant le jeton d'accès
   const authCookie = req.cookies.accessToken;
 
-  console.log("middle", req.cookies);
+  //console.log("middle", req.cookies);
 
   // en l'absence du dit jeton on renvoie une erreur 403
   if (!authCookie) {
@@ -17,7 +17,7 @@ function isLogged(req: CustomRequest, res: Response, next: NextFunction) {
 
   // on vérifie que le jeton n'a pas expiré et s'il est bien valide on en extrait les données qu'il contient
   jwt.verify(authCookie, process.env.SESSION_SECRET!, (err: any, data: any) => {
-    console.log({ data, err });
+    //console.log({ data, err });
 
     // s'il n'est pas valide on retourne une erreur 403
     if (err) {
