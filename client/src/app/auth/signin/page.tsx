@@ -36,6 +36,8 @@ export default function LoginForm() {
         password: passwordValue,
       });
 
+      console.log({ callbackUrl });
+
       const res = await signIn("credentials", {
         redirect: false,
         email: emailValue,

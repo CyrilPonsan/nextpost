@@ -16,7 +16,9 @@ export async function getData() {
   );
   console.log(response.status);
 
-  if (response.status === 403) throw new Error("session expirée, au-revoir");
+  if (response.status === 403) {
+    throw new Error("session expirée, au-revoir");
+  }
   return response.json();
 }
 

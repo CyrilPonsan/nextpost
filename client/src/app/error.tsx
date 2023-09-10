@@ -5,7 +5,7 @@ import React from "react";
 const ErrorBoundary = () => {
   return (
     <div className="w-screen h-screen flex justify-center items-center">
-      Ca à chié dans le ventilo
+      Ca chie dans le ventilo !
     </div>
   );
 };
