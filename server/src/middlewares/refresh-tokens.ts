@@ -9,10 +9,8 @@ import { tokensMaxAge } from "../lib/token-max-age";
 function refreshTokens(req: CustomRequest, res: Response, next: NextFunction) {
   const authCookie = req.cookies.refreshToken;
 
-  console.log("refresh cookie", req.cookies);
-
   jwt.verify(authCookie, process.env.SESSION_SECRET!, (err: any, data: any) => {
-    console.log(err);
+    //console.log(err);
 
     if (err) {
       return res.status(403).json({ message: noAccess });

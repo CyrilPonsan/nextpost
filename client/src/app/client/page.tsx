@@ -1,12 +1,16 @@
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import React from "react";
+import { redirect } from "next/navigation";
 
 import BASE_URL from "@/config/urls";
 import { options } from "../api/auth/[...nextauth]/options";
 
 async function getData() {
   const session = await getServerSession(options);
+
+  if (!session) redirect("/auth/signout");
+
   const response = await fetch(
     `${BASE_URL}/courrier?page=1&limit=10&type=true&field=bordereau&direction=DESC`,
     {
@@ -14,17 +18,13 @@ async function getData() {
       next: { revalidate: 120 },
     }
   );
-  console.log(response.status);
 
-  if (response.status === 403) {
-    throw new Error("session expirée, au-revoir");
-  }
   return response.json();
 }
 
 const ClientHomePage = async () => {
   const data = await getData();
-  console.log({ data });
+  //console.log({ data });
 
   return (
     <>

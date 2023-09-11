@@ -17,21 +17,22 @@ async function refreshAccessToken(token: any) {
     const refreshToken = response.headers.getSetCookie()[1];
 
     if (!response.ok) {
-      throw { message: "token expiré" };
+      if (response.status === 403) throw { message: "token expiré" };
+      else throw new Error(await response.json());
     }
 
     return {
       ...token,
       accessToken,
-      expiresAt: Date.now() + 10 * 1000,
+      expiresAt: Date.now() + 8 * 1000,
       refreshToken,
     };
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
 
     return {
       ...token,
-      error: "RefreshAccessTokenError",
+      error: error.message,
     };
   }
 }
@@ -68,7 +69,7 @@ export const options: NextAuthOptions = {
             ...user,
             accessToken,
             refreshToken,
-            expiresAt: new Date().getTime() + 10 * 1000,
+            expiresAt: new Date().getTime() + 8 * 1000,
           };
 
           return user;
@@ -84,8 +85,6 @@ export const options: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }: { token: any; user: any }) {
       if (user) {
-        console.log("hello user");
-
         return {
           accessToken: user.accessToken,
           refreshToken: user.refreshToken,
@@ -96,14 +95,15 @@ export const options: NextAuthOptions = {
           },
         };
       }
-      if (Date.now() < token.expiresAt) {
-        console.log("all good");
-
+      if (Date.now() - 2000 < token.expiresAt) {
         return token;
       }
-      console.log("token expiré");
 
-      return refreshAccessToken(token);
+      const refreshedToken = await refreshAccessToken(token);
+      if (refreshedToken.error) {
+        return null;
+      }
+      return refreshedToken;
     },
 
     async session({ session, token }: { session: Session; token: any }) {
@@ -112,7 +112,6 @@ export const options: NextAuthOptions = {
         session.accessToken = token.accessToken;
         session.refreshToken = token.refreshToken;
         session.expiresAt = token.expiresAt;
-        console.log({ session });
       }
 
       return session;

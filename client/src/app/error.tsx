@@ -1,13 +1,16 @@
 "use client";
 
+import FetchError from "@/types/fetch-error";
 import React from "react";
 
-const ErrorBoundary = () => {
+const Error = ({ error }: { error: FetchError }) => {
+  console.log("error", error);
+
   return (
     <div className="w-screen h-screen flex justify-center items-center">
-      Ca chie dans le ventilo !
+      {error.statusCode}
     </div>
   );
 };
 
-export default ErrorBoundary;
+export default Error;
