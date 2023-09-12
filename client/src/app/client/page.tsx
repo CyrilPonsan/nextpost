@@ -5,21 +5,32 @@ import { redirect } from "next/navigation";
 
 import BASE_URL from "@/config/urls";
 import { options } from "../api/auth/[...nextauth]/options";
+import FetchError from "@/types/fetch-error";
 
 async function getData() {
-  const session = await getServerSession(options);
+  try {
+    const session = await getServerSession(options);
 
-  if (!session) redirect("/auth/signout");
+    if (!session) redirect("/auth/signout");
 
-  const response = await fetch(
-    `${BASE_URL}/courrier?page=1&limit=10&type=true&field=bordereau&direction=DESC`,
-    {
-      headers: { Cookie: session?.accessToken! },
-      next: { revalidate: 120 },
+    const response = await fetch(
+      `${BASE_URL}/courrier?page=1&limit=10&type=true&field=bordereau&direction=DESC`,
+      {
+        headers: { Cookie: session?.accessToken! },
+        cache: "no-cache",
+      }
+    );
+
+    if (!response.ok) {
+      if (response.status === 403) {
+        redirect("/auth/no-session");
+      }
     }
-  );
 
-  return response.json();
+    return response.json();
+  } catch (error: unknown) {
+    throw error;
+  }
 }
 
 const ClientHomePage = async () => {

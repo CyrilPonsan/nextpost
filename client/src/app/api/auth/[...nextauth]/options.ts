@@ -16,11 +16,6 @@ async function refreshAccessToken(token: any) {
     const accessToken = response.headers.getSetCookie()[0];
     const refreshToken = response.headers.getSetCookie()[1];
 
-    if (!response.ok) {
-      if (response.status === 403) throw { message: "token expiré" };
-      else throw new Error(await response.json());
-    }
-
     return {
       ...token,
       accessToken,
@@ -100,9 +95,6 @@ export const options: NextAuthOptions = {
       }
 
       const refreshedToken = await refreshAccessToken(token);
-      if (refreshedToken.error) {
-        return null;
-      }
       return refreshedToken;
     },
 
