@@ -2,7 +2,7 @@ import { Response } from "express";
 
 import CustomRequest from "../../utils/interfaces/express/custom-request";
 import getUserById from "../../models/user/getUserById";
-import { noAccess, serverIssue } from "../../utils/data";
+import { noAccess, serverIssue } from "../../lib/error-messages";
 
 async function httpHandshake(req: CustomRequest, res: Response) {
   if (req.auth && req.auth.userId !== null) {

@@ -2,14 +2,14 @@ import { Response } from "express";
 
 import getAllCourriers from "../../models/courrier/getAllCourriers";
 import CustomRequest from "../../utils/interfaces/express/custom-request";
-import { badQuery, noAccess, serverIssue } from "../../utils/data";
 import { validationResult } from "express-validator";
+import { badRequest, noAccess, serverIssue } from "../../lib/error-messages";
 
 async function httpGetCourriers(req: CustomRequest, res: Response) {
   const result = validationResult(req);
 
   if (!result.isEmpty()) {
-    return res.status(400).json({ message: badQuery });
+    return res.status(400).json({ message: badRequest });
   }
 
   try {

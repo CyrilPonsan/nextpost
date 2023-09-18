@@ -1,12 +1,15 @@
 import { Request, Response } from "express";
 
-import { badQuery, serverIssue } from "../../utils/data";
 import { setToken } from "../../utils/auth.services/setToken";
 import login from "../../models/auth/login";
 import { Result, validationResult } from "express-validator";
 import { logger } from "../../utils/logs/logger";
+import { badRequest, serverIssue } from "../../lib/error-messages";
+import { tokensMaxAge } from "../../lib/token-max-age";
 
 async function httpLogin(req: Request, res: Response) {
+  console.log(req.body);
+
   try {
     const result: Result = validationResult(req);
 
@@ -17,7 +20,7 @@ async function httpLogin(req: Request, res: Response) {
     logger.error(error);
     return res
       .status(error.status ?? 500)
-      .json({ message: error.message ?? badQuery });
+      .json({ message: error.message ?? badRequest });
   }
   console.log(req.body);
 
@@ -28,17 +31,25 @@ async function httpLogin(req: Request, res: Response) {
     console.log(user);
 
     if (user) {
-      const accessToken = setToken(user.id, user.role);
-      const refreshToken = setToken(user.id, user.role);
+      const accessToken = setToken(
+        user.id,
+        user.roles,
+        tokensMaxAge.accessToken
+      );
+      const refreshToken = setToken(
+        user.id,
+        user.roles,
+        tokensMaxAge.refreshToken
+      );
 
       return res
         .cookie("accessToken", accessToken, {
-          maxAge: 24 * 60 * 60 * 1000,
+          maxAge: tokensMaxAge.accessCookie,
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
         })
         .cookie("refreshToken", refreshToken, {
-          maxAge: 60 * 60,
+          maxAge: tokensMaxAge.refreshCookie,
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
         })

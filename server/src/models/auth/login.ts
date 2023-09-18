@@ -1,6 +1,7 @@
 import * as bcrypt from "bcrypt";
+
 import { Expediteur } from "../../db/models/expediteur";
-import { credentialsError } from "../../utils/data";
+import { credentialsError } from "../../lib/error-messages";
 
 async function login(email: string, password: string) {
   try {
@@ -21,7 +22,7 @@ async function login(email: string, password: string) {
           id: user.id,
           nom: user.nom,
           prenom: user.prenom,
-          role: user.roles[0],
+          roles: user.roles,
         };
       }
     }
