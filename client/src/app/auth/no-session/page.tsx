@@ -1,13 +1,12 @@
-import LoginForm from "@/components/formulaires/login-form";
-import Link from "next/link";
 import React from "react";
+
+import LoginForm from "@/components/formulaires/login-form";
 
 const NoSessionPage = () => {
   return (
-    <div className="flex flex-col items-center gap-y-2">
-      <p>Votre session a expiré</p>
-      <LoginForm />
-    </div>
+    <section className="w-full min-h-[95vh] flex justify-center items-center">
+      <LoginForm errorMsg="Votre session a expiré, reconnectez-vous" />
+    </section>
   );
 };
 

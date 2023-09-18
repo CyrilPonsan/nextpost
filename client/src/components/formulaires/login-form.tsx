@@ -16,11 +16,18 @@ interface CustomError {
   message: string;
 }
 
-const LoginForm = () => {
+interface LoginFormProps {
+  errorMsg?: string;
+}
+
+const LoginForm = (props: LoginFormProps) => {
   const [loading, setLoading] = useState(false);
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const [error, setError] = useState<CustomError>({ type: "", message: "" });
+  const [error, setError] = useState<CustomError>({
+    type: "",
+    message: props.errorMsg ?? "",
+  });
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -76,8 +83,8 @@ const LoginForm = () => {
 
       {error.message.length > 0 ? (
         <>
-          <div className="flex justify-center">
-            <p className="text-error text-xs font-bold">{error.message}</p>
+          <div className="flex justify-start">
+            <p className="text-error text-sm font-bold">{error.message}</p>
           </div>
           <div className="divider" />
         </>
