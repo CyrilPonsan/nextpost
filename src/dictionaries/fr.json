@@ -1,0 +1,30 @@
+{
+  "navigation": {
+    "home": "Accueil",
+    "about": "A Propos",
+    "login": "Connexion",
+    "register": "Inscription"
+  },
+  "page": {
+    "home": {
+      "title": "Bienvenue sur NextJs i18n",
+      "description": "Internationalisation avec NextJs 13 App-Router"
+    },
+    "about": {
+      "title": "A propos de nous",
+      "description": "C'est la page à propos de nous"
+    },
+    "login": {
+      "title": "Connexion",
+      "email": "Adresse Email",
+      "password": "Mot de Passe",
+      "button": "Se connecter"
+    },
+    "register": {
+      "title": "Inscription",
+      "email": "Adresse Email",
+      "password": "Mot de Passe",
+      "button": "S'inscrire"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "login": "Sign In",
+    "register": "Register"
+  },
+  "page": {
+    "home": {
+      "title": "Welcome to NextJs i18n",
+      "description": "Internationalization in NextJs 13 App router"
+    },
+    "about": {
+      "title": "About Us",
+      "description": "This is the about page"
+    },
+    "login": {
+      "title": "Sign In",
+      "email": "Email Address",
+      "password": "Password",
+      "button": "Sign In"
+    },
+    "register": {
+      "title": "Register",
+      "email": "Email Address",
+      "password": "Password",
+      "button": "Sign Up"
+    }
+  }
+}
