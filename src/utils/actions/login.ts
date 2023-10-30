@@ -25,7 +25,7 @@ export async function login(_prevState: any, formData: FormData) {
   if (!res?.ok) {
     const error = {
       type: "identifiants",
-      message: "Email ou mot de passe incorrect",
+      message: "credentials",
     };
     return [error];
   } else {
