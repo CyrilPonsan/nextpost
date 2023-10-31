@@ -7,11 +7,11 @@ const LoginPage = async ({
 }: {
   params: { lang: Locale };
 }) => {
-  const { page } = await getDictionary(lang);
+  const { page, errors } = await getDictionary(lang);
 
   return (
     <div className="flex justify-center">
-      <LoginForm trad={page.login} />
+      <LoginForm trad={page.login} tradErrors={errors.login} />
     </div>
   );
 };

@@ -15,7 +15,7 @@ export async function registerUser(_prevState: any, formData: FormData) {
       return validationErrors(error);
     }
   }
-  const response = await fetch("http://localhost:3000/api/register", {
+  const response = await fetch(`${process.env.BASE_API}/register`, {
     headers: { Content: "application/json" },
     method: "POST",
     body: JSON.stringify({ data }),

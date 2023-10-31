@@ -2,16 +2,16 @@
 
 import React from "react";
 import { useFormState, useFormStatus } from "react-dom";
+import Link from "next/link";
 
 import { SpinnerButton } from "./spinner-button";
 import Field from "./forms/field";
 import CustomError from "@/types/interfaces/custom-error";
 import { login } from "@/utils/actions/login";
-import { Locale } from "@/i18n.config";
 
 const initialState: CustomError[] = [];
 
-const LoginForm = ({ trad }: { trad: any }) => {
+const LoginForm = ({ trad, tradErrors }: { trad: any; tradErrors: any }) => {
   const [state, formAction] = useFormState(login, initialState);
   const { pending } = useFormStatus();
 
@@ -27,7 +27,7 @@ const LoginForm = ({ trad }: { trad: any }) => {
 
         {state && state.length > 0 ? (
           <p className="w-full text-destructive text-xs font-bold mb-4">
-            {state[0].message}
+            {tradErrors[state[0].message]}
           </p>
         ) : null}
 
@@ -45,6 +45,10 @@ const LoginForm = ({ trad }: { trad: any }) => {
           type="password"
           errors={Array.isArray(state) ? state : []}
         />
+
+        <Link className="text-xs underline" href="/password">
+          {trad.link}
+        </Link>
 
         <div className="w-full mt-4">
           <SpinnerButton state={pending} name={trad.button} />

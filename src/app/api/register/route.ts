@@ -9,7 +9,6 @@ const prisma = new PrismaClient();
 export async function POST(request: Request) {
   const body = await request.json();
   const { email, password } = body.data;
-  console.log("hello endpoint");
 
   try {
     loginFormSchema.parse(body.data);

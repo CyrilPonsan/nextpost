@@ -25,6 +25,26 @@
       "email": "Email Address",
       "password": "Password",
       "button": "Sign Up"
+    },
+    "password": {
+      "title": "Reset the password",
+      "email": "Email",
+      "button": "Check email address"
     }
+  },
+  "errors": {
+    "login": {
+      "required_email": "An email adress is required.",
+      "not_valid_email": "Adresse email invalide.",
+      "password_required": "A password is required.",
+      "not_valid_password": "The password must contain at least 8 characters, one letter, one number, a cap and a special char.",
+      "credentials": "Credentials incorrect"
+    },
+    "password": {
+      "no_user": "User does not exist"
+    }
+  },
+  "responses": {
+    "email_verified": "Email verified"
   }
 }
