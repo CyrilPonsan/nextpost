@@ -22,11 +22,11 @@ export async function POST(request: Request) {
   try {
     if (!existingUser) {
       return NextResponse.json(
-        { type: "email", message: "User already exists" },
+        { type: "email", message: "no_user" },
         { status: 400 }
       );
     }
-    return NextResponse.json({ message: "Email verified" }, { status: 200 });
+    return NextResponse.json({ message: "email_verified" }, { status: 200 });
   } catch (error: any) {
     return NextResponse.json(error.message, { status: 500 });
   }

@@ -21,8 +21,13 @@ export async function checkEmail(_prevState: any, formData: FormData) {
     body: JSON.stringify({ data }),
   });
   if (response.ok) {
+    console.log(await response.json());
+
     return 200;
   } else {
+    if (response.status === 400) {
+      return 400;
+    }
     const error = await response.json();
     return [error];
   }

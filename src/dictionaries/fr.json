@@ -28,7 +28,9 @@
       "button": "S'inscrire"
     },
     "password": {
-      "title": "Réinitialiser le mot de passe"
+      "title": "Réinitialiser le mot de passe",
+      "email": "Adresse Email",
+      "button": "Vérifier l'adresse email"
     }
   },
   "errors": {
@@ -38,6 +40,12 @@
       "password_required": "Un mot de passe est requis.",
       "not_valid_password": "Le mot de passe doit avoir au minimum huit caractères, un chiffre, une minuscule, une majuscule et un caractère spécial.",
       "credentials": "Email ou mot de passe incorrect"
+    },
+    "password": {
+      "no_user": "Cette adresse n'existe pas"
     }
+  },
+  "responses": {
+    "email_verified": "Adresse email confirmée"
   }
 }

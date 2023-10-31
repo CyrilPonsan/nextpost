@@ -8,14 +8,19 @@ const PasswordRestPage = async ({
 }: {
   params: { lang: Locale };
 }) => {
-  const { page } = await getDictionary(lang);
+  const { page, errors, responses } = await getDictionary(lang);
+
+  const trad = {
+    page: page.password,
+    errors: errors.password,
+    responses,
+  };
+
+  console.log({ trad });
 
   return (
-    <div className=" min-h-[70vh] flex flex-col justify-center items-center">
-      <div className="flex justify-center my-4">
-        <h1 className="text-2xl font-extrabold">{page.password.title}</h1>
-      </div>
-      <CheckMailForm trad={page.password} />
+    <div className="min-h-[70vh] flex flex-col justify-center items-center">
+      <CheckMailForm trad={trad} />
     </div>
   );
 };
