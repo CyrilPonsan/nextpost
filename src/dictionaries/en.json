@@ -29,7 +29,7 @@
   },
   "errors": {
     "login": {
-      "required_email": "Une adresse email est requise.",
+      "required_email": "An email adress is required.",
       "not_valid_email": "Adresse email invalide.",
       "password_required": "Un mot de passe est requis.",
       "not_valid_password": "Le mot de passe doit avoir au minimum huit caractères, un chiffre, une minuscule, une majuscule et un caractère spécial."
