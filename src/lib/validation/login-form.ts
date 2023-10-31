@@ -1,3 +1,8 @@
+/**
+ * schema de validation utilisé pour le formulaire de connexion
+ * d'un utilisateur
+ */
+
 import { z } from "zod";
 import { regexPassword } from "../regex";
 

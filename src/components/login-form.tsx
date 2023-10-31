@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useFormState, useFormStatus } from "react-dom";
+import Link from "next/link";
 
 import { SpinnerButton } from "./spinner-button";
 import Field from "./forms/field";
@@ -44,6 +45,10 @@ const LoginForm = ({ trad, tradErrors }: { trad: any; tradErrors: any }) => {
           type="password"
           errors={Array.isArray(state) ? state : []}
         />
+
+        <Link className="text-xs underline" href="/password">
+          {trad.link}
+        </Link>
 
         <div className="w-full mt-4">
           <SpinnerButton state={pending} name={trad.button} />

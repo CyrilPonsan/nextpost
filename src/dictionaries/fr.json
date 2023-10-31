@@ -18,13 +18,17 @@
       "title": "Connexion",
       "email": "Adresse Email",
       "password": "Mot de Passe",
-      "button": "Se connecter"
+      "button": "Se connecter",
+      "link": "Besoin d'aide ?"
     },
     "register": {
       "title": "Inscription",
       "email": "Adresse Email",
       "password": "Mot de Passe",
       "button": "S'inscrire"
+    },
+    "password": {
+      "title": "Réinitialiser le mot de passe"
     }
   },
   "errors": {
