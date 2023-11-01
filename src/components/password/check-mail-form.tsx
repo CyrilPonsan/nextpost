@@ -48,10 +48,7 @@ const CheckMailForm = ({ trad }: { trad: any }) => {
 
               <CheckCircle className="w-4 h-4 text-green-500" />
             </div>
-            <p className="text-center">
-              Un mail contenant un lien pour réinitialiser votre mot de passe a
-              été envoyé à cette adresse.
-            </p>
+            <p className="text-center">{trad.page.text}</p>
           </>
         ) : null}
         {typeof state !== "number" || state !== 200 ? (
