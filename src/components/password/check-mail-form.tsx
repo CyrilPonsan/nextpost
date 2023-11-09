@@ -35,7 +35,7 @@ const CheckMailForm = ({ trad }: { trad: any }) => {
         </div>
         {state && Array.isArray(state) && state.length > 0 ? (
           <p className="w-full text-destructive text-xs font-bold mb-4">
-            {state[0].message}
+            {trad.errors[state[0].message]}
           </p>
         ) : null}
 

@@ -9,6 +9,8 @@ const LoginPage = async ({
 }) => {
   const { page, errors } = await getDictionary(lang);
 
+  console.log(page, errors);
+
   return (
     <div className="flex justify-center">
       <LoginForm trad={page.login} tradErrors={errors.login} />

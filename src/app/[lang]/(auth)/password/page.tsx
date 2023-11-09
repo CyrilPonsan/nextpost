@@ -1,7 +1,8 @@
+import React from "react";
+
 import CheckMailForm from "@/components/password/check-mail-form";
 import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
-import React from "react";
 
 const PasswordRestPage = async ({
   params: { lang },

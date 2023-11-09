@@ -32,6 +32,9 @@
       "email": "Adresse Email",
       "button": "Vérifier l'adresse email",
       "text": "Un mail contenant un lien pour réinitialiser votre mot de passe a été envoyé à cette adresse."
+    },
+    "newPassword": {
+      "title": "New Password"
     }
   },
   "errors": {
@@ -43,6 +46,8 @@
       "credentials": "Email ou mot de passe incorrect"
     },
     "password": {
+      "required_email": "Une adresse email est requise.",
+      "not_valid_email": "Adresse email invalide.",
       "no_user": "Cette adresse n'existe pas"
     }
   },

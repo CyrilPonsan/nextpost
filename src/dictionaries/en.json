@@ -18,7 +18,8 @@
       "title": "Sign In",
       "email": "Email Address",
       "password": "Password",
-      "button": "Sign In"
+      "button": "Sign In",
+      "link": "Need help ?"
     },
     "register": {
       "title": "Register",
@@ -42,6 +43,8 @@
       "credentials": "Credentials incorrect"
     },
     "password": {
+      "required_email": "An email adress is required.",
+      "not_valid_email": "Adresse email invalide.",
       "no_user": "User does not exist"
     }
   },
